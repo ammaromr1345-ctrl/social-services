@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>سجل الإيرادات</h2>
+    <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#addRevModal">إضافة إيراد +</button>
+</div>
+<div class="card p-4">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr><th>الرقم</th><th>المصدر</th><th>المبلغ</th><th>التاريخ</th></tr>
+        </thead>
+        <tbody>
+            {% for r in revenues %}
+            <tr><td>{{ r[0] }}</td><td class="fw-bold">{{ r[1] }}</td><td class="text-success fw-bold">{{ r[2] }} دج</td><td>{{ r[3] }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="addRevModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">إضافة إيراد</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <form method="POST" action="/add_revenue">
+        <div class="modal-body">
+            <div class="mb-3"><label class="form-label">المصدر (مثال: اشتراكات، تبرعات)</label><input type="text" name="source" class="form-control" required></div>
+            <div class="mb-3"><label class="form-label">المبلغ</label><input type="number" name="amount" class="form-control" required></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">حفظ</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

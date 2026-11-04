@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>إدارة الأعضاء</h2>
+    <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#addMemberModal">إضافة عضو جديد +</button>
+</div>
+<div class="card p-4">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr><th>الرقم</th><th>الاسم الكامل</th><th>الهاتف</th><th>العنوان</th></tr>
+        </thead>
+        <tbody>
+            {% for m in members %}
+            <tr><td>{{ m[0] }}</td><td class="fw-bold">{{ m[1] }}</td><td>{{ m[2] }}</td><td>{{ m[3] }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="addMemberModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">إضافة عضو</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <form method="POST" action="/add_member">
+        <div class="modal-body">
+            <div class="mb-3"><label class="form-label">الاسم</label><input type="text" name="name" class="form-control" required></div>
+            <div class="mb-3"><label class="form-label">الهاتف</label><input type="text" name="phone" class="form-control"></div>
+            <div class="mb-3"><label class="form-label">العنوان</label><input type="text" name="address" class="form-control"></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">حفظ البيانات</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

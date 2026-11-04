@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>التقارير المالية</h2>
+    <a href="/export_excel" class="btn btn-success px-4 fw-bold">تصدير التقرير الشامل (Excel)</a>
+</div>
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card p-4 h-100">
+            <h4 class="mb-3 text-primary">إحصائيات المنح</h4>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr><th>نوع المنحة</th><th>العدد</th><th>إجمالي المبلغ</th></tr>
+                </thead>
+                <tbody>
+                    {% for g in grants_stats %}
+                    <tr><td>{{ g[0] }}</td><td>{{ g[2] }}</td><td class="text-danger fw-bold">{{ g[1] }} دج</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4 h-100 bg-light">
+            <h4 class="mb-3 text-success">الملخص المالي</h4>
+            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                <span class="fw-bold">إجمالي الإيرادات:</span>
+                <span class="text-success fw-bold">{{ total_rev }} دج</span>
+            </div>
+            <p class="text-muted mt-3">يمكنك الضغط على زر "تصدير التقرير الشامل" في الأعلى للحصول على كافة التفاصيل (الأعضاء، المنح، القروض، التقسيط والإيرادات) في ملف Excel منسق.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

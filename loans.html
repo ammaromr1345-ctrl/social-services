@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>سجل القروض</h2>
+    <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#addLoanModal">إضافة قرض +</button>
+</div>
+<div class="card p-4">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr><th>الرقم</th><th>العضو</th><th>المبلغ</th><th>المسدد</th><th>المتبقي</th><th>الإجراء</th></tr>
+        </thead>
+        <tbody>
+            {% for l in loans %}
+            <tr>
+                <td>{{ l[0] }}</td><td class="fw-bold">{{ l[1] }}</td><td>{{ l[2] }}</td><td class="text-success">{{ l[3] }}</td><td class="text-danger fw-bold">{{ l[4] }} دج</td>
+                <td>
+                    {% if l[4] > 0 %}
+                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#repayModal{{ l[0] }}">تسديد دفعة</button>
+                    
+                    <div class="modal fade" id="repayModal{{ l[0] }}" tabindex="-1">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header"><h5 class="modal-title">تسديد قرض - {{ l[1] }}</h5></div>
+                          <form method="POST" action="/repay_loan/{{ l[0] }}">
+                            <div class="modal-body">
+                                <p>المبلغ المتبقي: <strong class="text-danger">{{ l[4] }} دج</strong></p>
+                                <label class="form-label">المبلغ المراد دفعه:</label>
+                                <input type="number" name="pay_amount" class="form-control" required max="{{ l[4] }}">
+                            </div>
+                            <div class="modal-footer"><button type="submit" class="btn btn-success">تأكيد الدفع</button></div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    {% else %}
+                    <span class="badge bg-secondary">مسدد بالكامل</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="addLoanModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">إضافة قرض</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <form method="POST" action="/add_loan">
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">العضو</label>
+                <select name="member_id" class="form-select" required>
+                    <option value="">-- اختر العضو --</option>
+                    {% for m in members %}<option value="{{ m[0] }}">{{ m[1] }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="mb-3"><label class="form-label">مبلغ القرض</label><input type="number" name="amount" class="form-control" required></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">حفظ</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
