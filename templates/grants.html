@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>سجل المنح</h2>
+    <button class="btn btn-primary px-4" data-bs-toggle="modal" data-bs-target="#addGrantModal">إضافة منحة +</button>
+</div>
+<div class="card p-4">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr><th>الرقم</th><th>العضو</th><th>نوع المنحة</th><th>المبلغ</th><th>التاريخ</th></tr>
+        </thead>
+        <tbody>
+            {% for g in grants %}
+            <tr><td>{{ g[0] }}</td><td class="fw-bold">{{ g[1] }}</td><td>{{ g[2] }}</td><td class="text-danger fw-bold">{{ g[3] }} دج</td><td>{{ g[4] }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="addGrantModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">إضافة منحة</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+      <form method="POST" action="/add_grant">
+        <div class="modal-body">
+            <div class="mb-3">
+                <label class="form-label">العضو</label>
+                <select name="member_id" class="form-select" required>
+                    <option value="">-- اختر العضو --</option>
+                    {% for m in members %}<option value="{{ m[0] }}">{{ m[1] }}</option>{% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">نوع المنحة</label>
+                <select name="type" class="form-select" required>
+                    <option value="تمدرسي">منحة تمدرسي</option>
+                    <option value="زواج">منحة زواج</option>
+                    <option value="عيد">منحة عيد</option>
+                    <option value="مرضى">إعانة مرضى</option>
+                    <option value="وفاة">منحة وفاة</option>
+                </select>
+            </div>
+            <div class="mb-3"><label class="form-label">المبلغ</label><input type="number" name="amount" class="form-control" required></div>
+        </div>
+        <div class="modal-footer"><button type="submit" class="btn btn-primary">حفظ</button></div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
