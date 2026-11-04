@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">لوحة التحكم</h2>
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card p-4 bg-primary text-white">
+            <h5>إجمالي الأعضاء</h5>
+            <h2 class="display-5">{{ members_count }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 bg-info text-white">
+            <h5>إجمالي الإيرادات</h5>
+            <h2 class="display-5">{{ revenues_sum }} دج</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 bg-success text-white">
+            <h5>إجمالي المنح</h5>
+            <h2 class="display-5">{{ grants_sum }} دج</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4 bg-warning text-dark">
+            <h5>ديون القروض المتبقية</h5>
+            <h2 class="display-5">{{ loans_remaining }} دج</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4 bg-secondary text-white">
+            <h5>ديون التقسيط المتبقية</h5>
+            <h2 class="display-5">{{ install_remaining }} دج</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}
