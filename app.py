@@ -5,7 +5,8 @@ from datetime import datetime
 import pandas as pd
 import io
 
-app = Flask(__name__)
+import os
+app = Flask(__name__, template_folder=os.path.abspath("templates"))
 app.secret_key = "social_services_secret"
 
 def init_db():
